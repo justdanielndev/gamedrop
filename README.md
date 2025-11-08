@@ -86,6 +86,13 @@ pnpm start
 2. **web-game-files** - Web game static files
 3. **game-media** - Game screenshots, videos, and promotional images
 
+### Required Functions
+
+1. **add-owner-function** - Handle game ownership transfers
+2. **slack-function** - Fetch user avatars from Slack
+3. **web-game-deploy-function** - Deploy web games from zip files
+4. **upload-game-media-function** - Process and upload game media
+
 (psst, this project was submitted to Moonshot, check it out!)
 <div align="center">
   <a href="https://moonshot.hackclub.com" target="_blank">
@@ -94,10 +101,3 @@ pnpm start
          style="width: 100%;">
   </a>
 </div>
-
-### Required Functions
-
-1. **add-owner-function** - Handle game ownership transfers
-2. **slack-function** - Fetch user avatars from Slack
-3. **web-game-deploy-function** - Deploy web games from zip files
-4. **upload-game-media-function** - Process and upload game media

@@ -87,7 +87,7 @@ export default function YourGamesPage() {
               📦
             </div>
             <h2>No games yet</h2>
-            <p>You don't own any games yet. Accept an invite to become a game owner.</p>
+            <p>You don&apos;t own any games yet. Accept an invite to become a game owner.</p>
           </div>
         ) : (
           <div className={styles.gamesList}>

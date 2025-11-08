@@ -15,7 +15,7 @@ export default function WebGamePlayer({
   const { gameId } = unwrappedParams;
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(16 / 9);
   

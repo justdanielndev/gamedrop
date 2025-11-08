@@ -70,7 +70,13 @@ export default function InviteRedeemPage({ params }: { params: Promise<{ slug: s
         return;
       }
 
-      const inviteDoc = inviteResponse.documents[0] as any;
+      const inviteDoc = inviteResponse.documents[0] as unknown as {
+        $id: string;
+        userId: string;
+        gameId: number;
+        inviteSlug: string;
+        redeemed: boolean;
+      };
 
       if (inviteDoc.redeemed) {
         setStatus('error');

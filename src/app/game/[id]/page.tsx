@@ -15,6 +15,20 @@ import { initAppwrite } from '@/lib/appwrite';
 import { formatReleaseDate } from '@/lib/dateUtils';
 import styles from './page.module.css';
 
+interface GameBuild {
+  platform: string;
+  file: string;
+  fileSize?: number;
+}
+
+interface GameVersion {
+  version: string;
+  title: string;
+  description?: string;
+  createdAt: string;
+  builds: GameBuild[];
+}
+
 const appwriteConfig = {
   endpoint: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || '',
   projectId: process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || '',
@@ -34,7 +48,6 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
   const { isInLibrary, addToLibrary, removeFromLibrary } = useLibrary(appwriteConfig, user?.$id || null);
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist(user?.$id);
   const [game, setGame] = useState<Game | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('STORE');
   const [selectedScreenshot, setSelectedScreenshot] = useState<number>(0);
   const [isLibraryProcessing, setIsLibraryProcessing] = useState(false);
@@ -42,7 +55,7 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
   const [showDownloadModal, setShowDownloadModal] = useState(false);
   const [expandedVersions, setExpandedVersions] = useState<Set<number>>(new Set([0]));
   const videoRef = useRef<HTMLVideoElement>(null);
-  const playerRef = useRef<any>(null);
+  const playerRef = useRef<{ destroy: () => void } | null>(null);
 
   useEffect(() => {
     
@@ -57,8 +70,8 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
             ...foundGame,
             versions: parsed
           };
-          setGame(parsedGame as any);
-        } catch (e) {
+          setGame(parsedGame);
+        } catch {
           setGame(foundGame);
         }
       } else if (foundGame.versions && Array.isArray(foundGame.versions)) {
@@ -193,15 +206,15 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
 
   const hasWebBuilds = () => {
     if (!game || !Array.isArray(game.versions)) return false;
-    return game.versions.some((v: any) => 
-      v.builds && Array.isArray(v.builds) && v.builds.some((b: any) => b.platform === 'Web')
+    return (game.versions as GameVersion[]).some((v) => 
+      v.builds && Array.isArray(v.builds) && v.builds.some((b) => b.platform === 'Web')
     );
   };
 
   const hasDesktopBuilds = () => {
     if (!game || !Array.isArray(game.versions)) return false;
-    return game.versions.some((v: any) => 
-      v.builds && Array.isArray(v.builds) && v.builds.some((b: any) => 
+    return (game.versions as GameVersion[]).some((v) => 
+      v.builds && Array.isArray(v.builds) && v.builds.some((b) => 
         b.platform === 'Windows' || b.platform === 'Mac' || b.platform === 'Linux'
       )
     );
@@ -232,8 +245,8 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
     const handlePlatformDownload = async (platform: string, versionIndex: number) => {
     if (!game || !game.versions || !Array.isArray(game.versions)) return;
     
-    const versions = game.versions;
-    const build = versions[versionIndex].builds.find((b: any) => b.platform === platform);
+    const versions = game.versions as GameVersion[];
+    const build = versions[versionIndex].builds.find((b) => b.platform === platform);
     
     if (!build) return;
     
@@ -302,7 +315,7 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
       )}
       
       <Topbar
-        onSearch={setSearchQuery}
+        onSearch={() => {/* No-op for game detail page */}}
         activeTab={activeTab}
         onTabChange={handleTabChange}
         hideSearch={true}
@@ -431,7 +444,7 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
             <section className={styles.section}>
               <h2>Available Versions</h2>
               <div className={styles.versionsContainer}>
-                {game.versions.map((version: any, index: number) => (
+                {(game.versions as GameVersion[]).map((version, index: number) => (
                   <div key={index} className={styles.versionCard}>
                     <div className={styles.versionHeader}>
                       <div>
@@ -572,7 +585,7 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
             <p>Select a version and platform</p>
             
             <div className={styles.versionsDownloadList}>
-              {game.versions.map((version: any, index: number) => (
+              {(game.versions as GameVersion[]).map((version, index: number) => (
                 <div key={index} className={styles.versionDownloadCard}>
                   <div 
                     className={styles.versionDownloadHeader}
@@ -590,8 +603,8 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
                   </div>                  {expandedVersions.has(index) && version.builds && version.builds.length > 0 && (
                     <div className={styles.platformButtons}>
                       {version.builds
-                        .filter((build: any) => build.platform !== 'Web')
-                        .map((build: any) => (
+                        .filter((build) => build.platform !== 'Web')
+                        .map((build) => (
                           <button
                             key={build.platform}
                             className={styles.platformBtn}
@@ -599,9 +612,11 @@ export default function GameDetailsPage({ params }: { params: Promise<{ id: stri
                           >
                             <Icon glyph="cloud-download" size={20} />
                             <span>{build.platform}</span>
-                            <span className={styles.buildSize}>
-                              {(build.fileSize / 1024 / 1024).toFixed(2)} MB
-                            </span>
+                            {build.fileSize && (
+                              <span className={styles.buildSize}>
+                                {(build.fileSize / 1024 / 1024).toFixed(2)} MB
+                              </span>
+                            )}
                           </button>
                         ))}
                     </div>

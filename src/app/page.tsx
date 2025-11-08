@@ -213,7 +213,7 @@ export default function Home() {
               {searchQuery ? (
                 <section className={styles.section}>
                   <h2 className={styles.sectionTitle}>
-                    Search results: "{searchQuery}"
+                    Search results: &quot;{searchQuery}&quot;
                   </h2>
                   {!user ? (
                     <div className={styles.placeholder}>

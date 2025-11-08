@@ -24,7 +24,7 @@ export async function GET(
       'web-builds'
     );
 
-    const webBuild = webBuildsResponse.documents.find((doc: any) => doc.gameId === gameId);
+    const webBuild = webBuildsResponse.documents.find((doc) => (doc as unknown as { gameId: string }).gameId === gameId);
 
     if (!webBuild) {
       return NextResponse.json(

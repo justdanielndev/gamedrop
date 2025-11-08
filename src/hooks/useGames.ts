@@ -29,38 +29,39 @@ export function useGames(config: AppwriteConfig) {
         config.collectionId
       );
 
-      const appwriteGames: Game[] = response.documents.map((doc: any) => {
+      const appwriteGames: Game[] = response.documents.map((doc) => {
+        const anyDoc = doc as Record<string, unknown>;
         return {
-          $id: doc.$id,
-          title: doc.title,
-          image: doc.image,
-          price: doc.price,
-          genre: doc.genre,
-          rating: doc.rating,
-          description: doc.description,
-          releaseDate: doc.releaseDate,
-          platforms: doc.platforms,
-          tags: doc.tags,
-          capsule: doc.capsule,
-          pageBackground: doc.pageBackground,
-          logo: doc.logo,
-          header: doc.header,
-          hero: doc.hero,
-          developer: doc.developer,
-          publisher: doc.publisher,
-          screenshots: doc.screenshots,
-          video: doc.video,
-          shortDescription: doc.description,
-          longDescription: doc.longDescription,
-          featured: doc.featured,
-          versions: doc.versions
-        };
+          $id: anyDoc.$id as string,
+          title: anyDoc.title as string,
+          image: anyDoc.image as string,
+          price: anyDoc.price as number,
+          genre: anyDoc.genre as string,
+          rating: anyDoc.rating as number,
+          description: anyDoc.description as string,
+          releaseDate: anyDoc.releaseDate as string,
+          platforms: anyDoc.platforms as string[],
+          tags: anyDoc.tags as string[],
+          capsule: anyDoc.capsule as string,
+          pageBackground: anyDoc.pageBackground as string,
+          logo: anyDoc.logo as string,
+          header: anyDoc.header as string,
+          hero: anyDoc.hero as string,
+          developer: anyDoc.developer as string,
+          publisher: anyDoc.publisher as string,
+          screenshots: anyDoc.screenshots as string[],
+          video: anyDoc.video as string,
+          shortDescription: anyDoc.description as string,
+          longDescription: anyDoc.longDescription as string,
+          featured: anyDoc.featured as boolean,
+          versions: anyDoc.versions as unknown
+        } as unknown as Game;
       });
 
       setGames(appwriteGames);
-    } catch (err: any) {
+    } catch (err) {
       console.error('Failed to fetch games from Appwrite:', err);
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {

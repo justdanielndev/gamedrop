@@ -1,4 +1,4 @@
-import { Client, Databases, Account, OAuthProvider, Functions, ExecutionMethod, Storage } from 'appwrite';
+import { Client, Databases, Account, Functions, ExecutionMethod, Storage } from 'appwrite';
 
 let client: Client | null = null;
 let databases: Databases | null = null;
@@ -50,7 +50,7 @@ export async function loginWithOIDC(successUrl?: string, failureUrl?: string) {
   const providerName = process.env.NEXT_PUBLIC_OIDC_PROVIDER_NAME || 'oidc';
   
   account.createOAuth2Session(
-    providerName as any,
+    providerName as never,
     successRedirect,
     failureRedirect
   );
@@ -81,7 +81,7 @@ export async function logout() {
   await account.deleteSession('current');
 }
 
-export async function executeFunction(functionId: string, body: any) {
+export async function executeFunction(functionId: string, body: unknown) {
   if (!functions) throw new Error('Appwrite not configured');
   try {
     const bodyString = typeof body === 'string' ? body : JSON.stringify(body);

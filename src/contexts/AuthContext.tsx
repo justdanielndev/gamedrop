@@ -62,7 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const identities = await getUserIdentities();
         
         if (identities && identities.identities && identities.identities.length > 0) {
-          const slackIdentity = identities.identities.find((identity: any) => 
+          const slackIdentity = identities.identities.find((identity: { provider: string; providerUid?: string }) => 
             identity.provider === 'oidc' || identity.provider?.toLowerCase().includes('slack')
           );
           

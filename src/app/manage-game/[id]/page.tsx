@@ -132,7 +132,7 @@ export default function ManageGamePage({ params }: { params: Promise<{ id: strin
       if (fetchedGame.versions && typeof fetchedGame.versions === 'string') {
         try {
           fetchedGame.versions = JSON.parse(fetchedGame.versions as string);
-        } catch (e) {
+        } catch {
           fetchedGame.versions = [];
         }
       }
@@ -473,7 +473,7 @@ export default function ManageGamePage({ params }: { params: Promise<{ id: strin
       const { storage, databases, functions } = getAppwriteClient();
       if (!storage || !databases) throw new Error('Storage/Database not available');
 
-      let buildData: any;
+      let buildData: Record<string, unknown>;
 
       if (newBuild.platform === 'Web') {
         if (!functions) throw new Error('Functions not available');
@@ -504,7 +504,7 @@ export default function ManageGamePage({ params }: { params: Promise<{ id: strin
         );
 
         let status = execution.status;
-        let executionId = execution.$id;
+        const executionId = execution.$id;
         
         while (status === 'processing') {
           await new Promise(resolve => setTimeout(resolve, 2000));
@@ -573,7 +573,7 @@ export default function ManageGamePage({ params }: { params: Promise<{ id: strin
         { versions: JSON.stringify(updatedVersions) }
       );
 
-      setGame({ ...game, versions: updatedVersions });
+      setGame({ ...game, versions: updatedVersions as unknown as string | GameVersion[] | undefined });
       setNewBuild({ platform: 'Windows', file: null, viewportWidth: 1920, viewportHeight: 1080 });
       setShowAddBuild(null);
     } catch (error) {

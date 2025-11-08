@@ -38,24 +38,27 @@ export function useNews(config: AppwriteConfig) {
         'news'
       );
 
-      const newsArticles: NewsArticle[] = response.documents.map((doc: any) => ({
-        $id: doc.$id,
-        slug: doc.slug,
-        headline: doc.headline,
-        content: doc.content,
-        author: doc.author,
-        gameId: doc.gameId ? String(doc.gameId) : undefined,
-        publishDate: doc.publishDate
-      }));
+      const newsArticles: NewsArticle[] = response.documents.map((doc) => {
+        const anyDoc = doc as Record<string, unknown>;
+        return {
+          $id: anyDoc.$id as string,
+          slug: anyDoc.slug as string,
+          headline: anyDoc.headline as string,
+          content: anyDoc.content as string,
+          author: anyDoc.author as string,
+          gameId: anyDoc.gameId ? String(anyDoc.gameId) : undefined,
+          publishDate: anyDoc.publishDate as string
+        };
+      });
 
       newsArticles.sort((a, b) => 
         new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
       );
 
       setNews(newsArticles);
-    } catch (err: any) {
+    } catch (err) {
       console.error('Failed to fetch news from Appwrite:', err);
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
       setLoading(false);
     }

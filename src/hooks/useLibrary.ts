@@ -3,13 +3,6 @@ import { getAppwriteClient } from '@/lib/appwrite';
 import { Query } from 'appwrite';
 import { Game } from '@/components/GameCard';
 
-interface LibraryEntry {
-  $id: string;
-  userId: string;
-  gameId: string;
-  addedAt: string;
-}
-
 interface AppwriteConfig {
   databaseId: string;
   collectionId?: string;
@@ -48,7 +41,7 @@ export function useLibrary(config: AppwriteConfig, userId: string | null) {
           return;
         }
 
-        const gameIds = libraryResponse.documents.map((doc: any) => doc.gameId);
+        const gameIds = libraryResponse.documents.map((doc) => (doc as unknown as { gameId: string }).gameId);
 
         const gamesResponse = await databases.listDocuments(
           config.databaseId,
@@ -56,24 +49,27 @@ export function useLibrary(config: AppwriteConfig, userId: string | null) {
           [Query.equal('$id', gameIds)]
         );
 
-        const games = gamesResponse.documents.map((doc: any) => ({
-          $id: doc.$id,
-          title: doc.title || 'Untitled',
-          description: doc.description || '',
-          shortDescription: doc.shortDescription || doc.description || '',
-          longDescription: doc.longDescription || doc.description || '',
-          image: doc.image || '',
-          capsule: doc.capsule || doc.image || '',
-          price: doc.price || 0,
-          genre: doc.genre || 'Unknown',
-          rating: doc.rating || 0,
-          developer: doc.developer || 'Unknown',
-          publisher: doc.publisher || 'Unknown',
-          releaseDate: doc.releaseDate || '',
-          featured: doc.featured || false,
-          screenshots: Array.isArray(doc.screenshots) ? doc.screenshots : [],
-          video: doc.video || null,
-        }));
+        const games = gamesResponse.documents.map((doc) => {
+          const anyDoc = doc as Record<string, unknown>;
+          return {
+            $id: anyDoc.$id as string,
+            title: (anyDoc.title as string) || 'Untitled',
+            description: (anyDoc.description as string) || '',
+            shortDescription: (anyDoc.shortDescription as string) || (anyDoc.description as string) || '',
+            longDescription: (anyDoc.longDescription as string) || (anyDoc.description as string) || '',
+            image: (anyDoc.image as string) || '',
+            capsule: (anyDoc.capsule as string) || (anyDoc.image as string) || '',
+            price: (anyDoc.price as number) || 0,
+            genre: (anyDoc.genre as string) || 'Unknown',
+            rating: (anyDoc.rating as number) || 0,
+            developer: (anyDoc.developer as string) || 'Unknown',
+            publisher: (anyDoc.publisher as string) || 'Unknown',
+            releaseDate: (anyDoc.releaseDate as string) || '',
+            featured: (anyDoc.featured as boolean) || false,
+            screenshots: Array.isArray(anyDoc.screenshots) ? (anyDoc.screenshots as string[]) : [],
+            video: (anyDoc.video as string) || null,
+          } as unknown as Game;
+        });
 
         setLibraryGames(games);
         setError(null);

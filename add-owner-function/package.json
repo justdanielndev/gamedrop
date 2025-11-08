@@ -1,0 +1,14 @@
+{
+  "name": "add-owner-function",
+  "version": "1.0.0",
+  "description": "Appwrite function to add user as game owner via invite redemption",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "build": "tar -czf ../build.tar.gz .",
+    "deploy": "npm run build"
+  },
+  "dependencies": {
+    "node-appwrite": "^13.0.0"
+  }
+}

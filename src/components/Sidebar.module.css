@@ -1,0 +1,100 @@
+.sidebar {
+  width: 240px;
+  background: linear-gradient(180deg, #1b2838 0%, #171a21 100%);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.logo {
+  padding: 24px 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #66c0f4;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logoIcon {
+  font-size: 28px;
+}
+
+.nav {
+  flex: 1;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navItem {
+  padding: 14px 20px;
+  color: #8f98a0;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: inherit;
+}
+
+.navItem:hover {
+  background: rgba(102, 192, 244, 0.1);
+  color: #fff;
+}
+
+.navItem.active {
+  background: linear-gradient(90deg, rgba(102, 192, 244, 0.2) 0%, transparent 100%);
+  color: #66c0f4;
+  border-left: 3px solid #66c0f4;
+}
+
+.navIcon {
+  font-size: 18px;
+}
+
+.account {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #66c0f4 0%, #5692bf 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: white;
+}
+
+.accInfo {
+  flex: 1;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.status {
+  font-size: 12px;
+  color: #57cbde;
+}

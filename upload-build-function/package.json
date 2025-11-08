@@ -1,0 +1,14 @@
+{
+  "name": "upload-build-function",
+  "version": "1.0.0",
+  "description": "Appwrite function to upload game builds to storage",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "tar -czf ../upload-build-function.tar.gz package.json src/ README.md"
+  },
+  "dependencies": {
+    "node-appwrite": "^14.1.0"
+  },
+  "devDependencies": {},
+  "type": "commonjs"
+}

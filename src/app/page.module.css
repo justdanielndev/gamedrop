@@ -1,167 +1,237 @@
-.page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: #0e1116;
 }
 
 .main {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  background: #0e1116;
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
+.content {
+  flex: 1;
+  overflow-y: auto;
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+.hero {
+  margin-bottom: 40px;
+  max-height: 450px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out, margin-bottom 0.4s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 1;
 }
 
-.main code {
-  font-family: inherit;
-  background: var(--gray-alpha-100);
-  padding: 2px 4px;
+.heroCollapsed {
+  max-height: 0;
+  margin-bottom: 0;
+  opacity: 0;
+}
+
+.featuredTitle {
+  font-size: 12px;
+  font-weight: bolder;
+  color: #5b9dd9;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 12px 0;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 12px;
   border-radius: 4px;
-  font-weight: 600;
+  display: inline-block;
+  backdrop-filter: blur(4px);
 }
 
-.ctas {
+.featuredWrapper {
+  position: relative;
+}
+
+.featuredContainer {
   display: flex;
-  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0;
+  padding: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.ctas a {
-  appearance: none;
-  border-radius: 128px;
-  height: 48px;
-  padding: 0 20px;
-  border: 1px solid transparent;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    border-color 0.2s;
-  cursor: pointer;
+.featuredContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.featuredCard {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  height: 450px;
+  overflow: hidden;
+  position: relative;
+}
+
+.featuredImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.featuredOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
+  padding: 60px 80px;
+}
+
+.featuredContent {
+  max-width: 700px;
+}
+
+.featuredGameTitle {
+  font-size: 56px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.featuredDesc {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 600px;
+  max-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #5b9dd9 rgba(255, 255, 255, 0.1);
+}
+
+.featuredDesc::-webkit-scrollbar {
+  width: 6px;
+}
+
+.featuredDesc::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.featuredDesc::-webkit-scrollbar-thumb {
+  background: #5b9dd9;
+  border-radius: 3px;
+}
+
+.featuredDesc::-webkit-scrollbar-thumb:hover {
+  background: #4a8bc2;
+}
+
+.featuredNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: #fff;
+  font-size: 48px;
+  width: 50px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+  font-family: inherit;
+  line-height: 1;
+  padding: 0;
+}
+
+.featuredNav:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.featuredNavLeft {
+  left: 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.featuredNavRight {
+  right: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+.featuredBtn {
+  padding: 14px 32px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.featuredBtn:hover {
+  background: #e6e6e6;
+  transform: translateY(-1px);
+}
+
+.section {
+  padding: 40px 40px 60px;
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 24px;
+  padding-left: 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #8b8b8b;
   font-size: 16px;
-  line-height: 20px;
-  font-weight: 500;
 }
 
-a.primary {
-  background: var(--foreground);
-  color: var(--background);
-  gap: 8px;
-}
-
-a.secondary {
-  border-color: var(--gray-alpha-200);
-  min-width: 158px;
-}
-
-.footer {
-  grid-row-start: 3;
+.placeholder {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: #5b6166;
+  text-align: center;
+}
+
+.placeholder h2 {
+  font-size: 32px;
+  color: #8b8b8b;
+  margin-bottom: 8px;
+}
+
+.placeholder p {
+  font-size: 16px;
+  color: #5b6166;
+}
+
+.newsSection {
+  padding: 40px;
+}
+
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 24px;
 }
 
-.footer a {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.footer img {
-  flex-shrink: 0;
-}
-
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
-
-  .footer a:hover {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-}
-
-@media (max-width: 600px) {
-  .page {
-    padding: 32px;
-    padding-bottom: 80px;
-  }
-
-  .main {
-    align-items: center;
-  }
-
-  .main ol {
-    text-align: center;
-  }
-
-  .ctas {
-    flex-direction: column;
-  }
-
-  .ctas a {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 16px;
-  }
-
-  a.secondary {
-    min-width: auto;
-  }
-
-  .footer {
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
+@media (max-width: 768px) {
+  .newsGrid {
+    grid-template-columns: 1fr;
   }
 }

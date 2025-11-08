@@ -1,0 +1,13 @@
+{
+  "name": "web-game-deploy-function",
+  "version": "1.0.0",
+  "description": "Extract web game ZIP and deploy to Appwrite Storage",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "echo 'No build needed for Node.js'"
+  },
+  "dependencies": {
+    "node-appwrite": "^14.1.0",
+    "adm-zip": "^0.5.10"
+  }
+}

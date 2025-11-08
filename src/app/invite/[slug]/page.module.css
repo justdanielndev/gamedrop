@@ -1,0 +1,264 @@
+.page {
+  min-height: 100vh;
+  background: #0e1116;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  max-width: 500px;
+  width: 100%;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo img {
+  height: 48px;
+  width: auto;
+}
+
+.card {
+  background: #18191d;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 40px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(91, 157, 217, 0.1);
+  border-top-color: #5b9dd9;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.successIcon {
+  width: 60px;
+  height: 60px;
+  background: rgba(46, 204, 113, 0.1);
+  border: 2px solid #2ecc71;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.errorIcon {
+  width: 60px;
+  height: 60px;
+  background: rgba(231, 76, 60, 0.1);
+  border: 2px solid #e74c3c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.card h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #5b9dd9;
+  margin: 0;
+}
+
+.card p {
+  font-size: 15px;
+  color: #8b8b8b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.inviteDetails {
+  background: rgba(91, 157, 217, 0.03);
+  border: 1px solid rgba(91, 157, 217, 0.1);
+  border-radius: 6px;
+  padding: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inviteText {
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.gameName {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.description {
+  font-size: 14px;
+  color: #c0c0c0;
+  line-height: 1.7;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.acceptButton,
+.declineButton {
+  flex: 1;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.acceptButton {
+  background: #5b9dd9;
+  color: #fff;
+}
+
+.acceptButton:hover {
+  background: #4a8bc2;
+  transform: translateY(-1px);
+}
+
+.declineButton {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.declineButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.buttonIcon {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.successMessage {
+  color: #2ecc71;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.successGameName {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2ecc71;
+  margin: 0;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.redirect {
+  color: #5b9dd9;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.button {
+  margin-top: 8px;
+  padding: 14px 32px;
+  background: #5b9dd9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.button:hover {
+  background: #4a8bc2;
+  transform: translateY(-1px);
+}
+
+.buttonSecondary {
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.buttonSecondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 60px 32px;
+  }
+
+  .card h1 {
+    font-size: 24px;
+  }
+
+  .gameName {
+    font-size: 28px;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .acceptButton,
+  .declineButton {
+    width: 100%;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "upload-game-media-function",
+  "version": "1.0.0",
+  "description": "Secure file upload function for game media",
+  "main": "src/main.js",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "node-appwrite": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.9",
+    "prettier": "^3.3.3"
+  }
+}
